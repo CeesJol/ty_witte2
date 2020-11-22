@@ -1,0 +1,8 @@
+type Post {
+  name: String
+  imageUrl: String
+}
+
+type Query {
+  posts: [Post]
+}
