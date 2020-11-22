@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import Layout from "../components/Layout"
+import Layout from "../components/layout"
 
 const GraphQLClient = require("graphql-request").GraphQLClient
 
@@ -12,14 +12,10 @@ const IndexPage = () => {
     },
   })
   const [posts, setPosts] = useState(null)
-  const [loaded, setLoaded] = useState(false)
   useEffect(() => {
-    if (!loaded) {
-      setLoaded(true)
-
-      client
-        .request(
-          `query {
+    client
+      .request(
+        `query {
 						posts {
 							data {
 								_id
@@ -28,12 +24,11 @@ const IndexPage = () => {
 							}
 						}
 					}`
-        )
-        .then(data => {
-          setPosts(data.posts.data)
-        })
-    }
-  })
+      )
+      .then(data => {
+        setPosts(data.posts.data)
+      })
+  }, [])
   return (
     <Layout>
       <>
@@ -45,7 +40,7 @@ const IndexPage = () => {
             <p>There are no posts yet</p>
           ) : (
             posts.map(post => (
-              <li>
+              <li key={`post-${post._id}`}>
                 {post.name} - {post.imageUrl}
               </li>
             ))

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import Layout from "../components/Layout"
+import Layout from "../components/layout"
 import { toast, ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
@@ -15,7 +15,6 @@ const UploadNewImagesPage = () => {
   })
   const [disabled, setDisabled] = useState(false)
   const [posts, setPosts] = useState(null)
-  const [loaded, setLoaded] = useState(false)
   const [fields, setFields] = useState({
     name: "",
     imageUrl: "",
@@ -58,12 +57,9 @@ const UploadNewImagesPage = () => {
     )
   }
   useEffect(() => {
-    if (!loaded) {
-      setLoaded(true)
-
-      client
-        .request(
-          `query {
+    client
+      .request(
+        `query {
 						posts {
 							data {
 								_id
@@ -72,12 +68,11 @@ const UploadNewImagesPage = () => {
 							}
 						}
 					}`
-        )
-        .then(data => {
-          setPosts(data.posts.data)
-        })
-    }
-  })
+      )
+      .then(data => {
+        setPosts(data.posts.data)
+      })
+  }, [])
   return (
     <Layout>
       <ToastContainer />
@@ -92,7 +87,7 @@ const UploadNewImagesPage = () => {
             <p>There are no posts yet</p>
           ) : (
             posts.map(post => (
-              <li>
+              <li key={`post-${post._id}`}>
                 {post.name} - {post.imageUrl}
               </li>
             ))
