@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Layout from "../components/layout"
+import SEO from "../components/seo"
+import Post from "../components/post"
 
 const GraphQLClient = require("graphql-request").GraphQLClient
 
@@ -31,22 +33,20 @@ const IndexPage = () => {
   }, [])
   return (
     <Layout>
-      <>
-        hi
-        <ul>
-          {!posts ? (
-            <p>Loading posts...</p>
-          ) : posts.length === 0 ? (
-            <p>There are no posts yet</p>
-          ) : (
-            posts.map(post => (
-              <li key={`post-${post._id}`}>
-                {post.name} - {post.imageUrl}
-              </li>
-            ))
-          )}
-        </ul>
-      </>
+      <SEO title="Discount Codes" />
+      {!posts ? (
+        <p>Loading posts...</p>
+      ) : posts.length === 0 ? (
+        <p>There are no posts yet</p>
+      ) : (
+        posts.map(post => (
+          <Post
+            key={`post-${post._id}`}
+            name={post.name}
+            imageUrl={post.imageUrl}
+          />
+        ))
+      )}
     </Layout>
   )
 }

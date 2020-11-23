@@ -30,16 +30,22 @@ const Layout = ({ children }) => {
         style={{
           margin: `0 auto`,
           maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
+          padding: `0 0 1.45rem`,
         }}
       >
         <main>{children}</main>
-        <footer style={{
-          marginTop: `2rem`
-        }}>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.com">Gatsby</a>
+        <footer
+          style={{
+            marginTop: `2rem`,
+            color: "grey",
+            fontSize: "0.75rem",
+            lineHeight: "1",
+          }}
+        >
+          © {new Date().getFullYear()} DiscountCodes. DiscountCodes is a
+          participant in the Amazon Services LLC Associates Program, an
+          affiliate advertising program designed to provide a means for sites to
+          earn advertising fees by advertising and linking to Amazon.com
         </footer>
       </div>
     </>

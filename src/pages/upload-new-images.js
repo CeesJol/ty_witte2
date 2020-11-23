@@ -28,7 +28,7 @@ const UploadNewImagesPage = () => {
   const handleNewPost = async event => {
     setDisabled(true)
     event.preventDefault()
-    await mutate(fields.name, fields.imageUrl).then(
+    await createPost(fields.name, fields.imageUrl).then(
       post => {
         setFields({
           name: "",
@@ -38,22 +38,39 @@ const UploadNewImagesPage = () => {
         setPosts([...posts, post.createPost])
       },
       err => {
-        toast.error("Failed to add post")
+        toast.error(`Failed to create post: ${err}`)
       }
     )
     setDisabled(false)
   }
-  const mutate = async (name, imageUrl) => {
+  const handleDeletePost = async id => {
+    await deletePost(id).then(
+      post => {
+        toast.success("Post deleted successfully!")
+        setPosts(posts.filter(x => x._id !== post.deletePost._id))
+      },
+      err => {
+        toast.error(`Failed to delete post: ${err}`)
+      }
+    )
+  }
+  const createPost = async (name, imageUrl) => {
     return await client.request(
-      `
-			mutation {
+      `mutation {
 				createPost(data: { name: "${name}", imageUrl: "${imageUrl}" }) {
 					name
 					imageUrl
 				}
-			}
-			
-			`
+			}`
+    )
+  }
+  const deletePost = async id => {
+    return await client.request(
+      `mutation {
+				deletePost(id: "${id}") {
+					_id
+				}
+			}`
     )
   }
   useEffect(() => {
@@ -80,19 +97,22 @@ const UploadNewImagesPage = () => {
         <p>
           <b>Your posts</b>
         </p>
-        <ul>
-          {!posts ? (
-            <p>Loading posts...</p>
-          ) : posts.length === 0 ? (
-            <p>There are no posts yet</p>
-          ) : (
-            posts.map(post => (
+
+        {!posts ? (
+          <p>Loading posts...</p>
+        ) : posts.length === 0 ? (
+          <p>There are no posts yet</p>
+        ) : (
+          <ul>
+            {posts.map(post => (
               <li key={`post-${post._id}`}>
-                {post.name} - {post.imageUrl}
+                {post.name} - {post.imageUrl} -{" "}
+                <a onClick={() => handleDeletePost(post._id)}>delete</a>
               </li>
-            ))
-          )}
-        </ul>
+            ))}
+          </ul>
+        )}
+
         <br />
         <form>
           <p>
@@ -102,6 +122,7 @@ const UploadNewImagesPage = () => {
             type="text"
             id="name"
             name="name"
+            placeholder="Name"
             value={fields.name}
             onChange={handleChange}
           />
@@ -110,6 +131,7 @@ const UploadNewImagesPage = () => {
             type="text"
             id="imageUrl"
             name="imageUrl"
+            placeholder="Image URL"
             value={fields.imageUrl}
             onChange={handleChange}
           />
@@ -122,52 +144,5 @@ const UploadNewImagesPage = () => {
     </Layout>
   )
 }
-
-// export const query = graphql`
-//   {
-//     fauna {
-//       posts {
-//         data {
-//           _id
-//           name
-//           imageUrl
-//         }
-//       }
-//     }
-//   }
-// `
-
-// const ADD_POST = graphql`
-//   mutation AddPost($name: String!, $imageUrl: String!) {
-//     addPost(name: $name, imageUrl: $imageUrl) {
-//       name
-//       imageUrl
-//     }
-//   }
-// `
-
-// function addPost() {
-//   let input;
-//   const [addPost, { data }] = useMutation(ADD_POST);
-
-//   return (
-//     <div>
-//       <form
-//         onSubmit={e => {
-//           e.preventDefault();
-//           addPost({ variables: { type: input.value } });
-//           input.value = '';
-//         }}
-//       >
-//         <input
-//           ref={node => {
-//             input = node;
-//           }}
-//         />
-//         <button type="submit">Add Post</button>
-//       </form>
-//     </div>
-//   );
-// }
 
 export default UploadNewImagesPage

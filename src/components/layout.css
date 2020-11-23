@@ -52,7 +52,12 @@ template {
 }
 a {
   background-color: transparent;
-  -webkit-text-decoration-skip: objects;
+	-webkit-text-decoration-skip: objects;
+	color: blue;
+	cursor: pointer;
+}
+a:hover{
+	text-decoration: underline;
 }
 a:active,
 a:hover {
