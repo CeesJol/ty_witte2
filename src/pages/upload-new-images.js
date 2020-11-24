@@ -20,6 +20,8 @@ const UploadNewImagesPage = () => {
     imageUrl: "",
     productUrl: "",
     code: "",
+    price1: "",
+    price2: "",
   }
   const [fields, setFields] = useState(defaultState)
   const handleChange = event => {
@@ -35,7 +37,9 @@ const UploadNewImagesPage = () => {
       fields.name,
       fields.imageUrl,
       fields.productUrl,
-      fields.code
+      fields.code,
+      fields.price1,
+      fields.price2
     ).then(
       post => {
         setFields(defaultState)
@@ -59,15 +63,24 @@ const UploadNewImagesPage = () => {
       }
     )
   }
-  const createPost = async (name, imageUrl, productUrl, code) => {
+  const createPost = async (
+    name,
+    imageUrl,
+    productUrl,
+    code,
+    price1,
+    price2
+  ) => {
     return await client.request(
       `mutation {
-				createPost(data: { name: "${name}", imageUrl: "${imageUrl}", productUrl: "${productUrl}", code: "${code}" }) {
+				createPost(data: { name: "${name}", imageUrl: "${imageUrl}", productUrl: "${productUrl}", code: "${code}", price1: "${price1}", price2: "${price2}" }) {
 					_id
 					name
 					imageUrl
 					productUrl
 					code
+					price1
+					price2
 				}
 			}`
     )
@@ -92,6 +105,8 @@ const UploadNewImagesPage = () => {
 								imageUrl
 								productUrl
 								code
+								price1
+								price2
 							}
 						}
 					}`
@@ -167,6 +182,24 @@ const UploadNewImagesPage = () => {
             name="code"
             placeholder="Discount Code"
             value={fields.code}
+            onChange={handleChange}
+          />
+          <br />
+          <input
+            type="text"
+            id="price1"
+            name="price1"
+            placeholder="Old price"
+            value={fields.price1}
+            onChange={handleChange}
+          />
+          <br />
+          <input
+            type="text"
+            id="price2"
+            name="price2"
+            placeholder="New price"
+            value={fields.price2}
             onChange={handleChange}
           />
           <br />

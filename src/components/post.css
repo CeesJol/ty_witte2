@@ -26,3 +26,8 @@
 	text-decoration: none;
 	color: black;
 }
+
+.post-container p {
+	line-height: 1;
+	margin-bottom: 10px;
+}

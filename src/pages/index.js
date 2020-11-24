@@ -25,6 +25,8 @@ const IndexPage = () => {
 								imageUrl
 								productUrl
 								code
+								price1
+								price2
 							}
 						}
 					}`
@@ -51,6 +53,8 @@ const IndexPage = () => {
                   imageUrl={post.imageUrl}
                   productUrl={post.productUrl}
                   code={post.code}
+                  price1={post.price1}
+                  price2={post.price2}
                 />
               ) : (
                 <></>
@@ -67,6 +71,8 @@ const IndexPage = () => {
                   imageUrl={post.imageUrl}
                   productUrl={post.productUrl}
                   code={post.code}
+                  price1={post.price1}
+                  price2={post.price2}
                 />
               ) : (
                 <></>

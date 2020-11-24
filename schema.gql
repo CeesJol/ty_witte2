@@ -3,6 +3,8 @@ type Post {
   imageUrl: String
   productUrl: String
   code: String
+  price1: String
+  price2: String
 }
 
 type Query {
