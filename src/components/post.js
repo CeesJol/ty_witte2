@@ -1,9 +1,9 @@
 import React from "react"
-import "./layout.css"
+import "./post.css"
 
-const Post = ({ name, imageUrl }) => {
+const Post = ({ name, imageUrl, productUrl }) => {
   return (
-    <a href={imageUrl}>
+    <a href={productUrl} target="_blank">
       <div className="post">
         <img src={imageUrl} alt={name} />
         <p>{name}</p>

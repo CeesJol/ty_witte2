@@ -23,6 +23,7 @@ const IndexPage = () => {
 								_id
 								name
 								imageUrl
+								productUrl
 							}
 						}
 					}`
@@ -39,13 +40,37 @@ const IndexPage = () => {
       ) : posts.length === 0 ? (
         <p>There are no posts yet</p>
       ) : (
-        posts.map(post => (
-          <Post
-            key={`post-${post._id}`}
-            name={post.name}
-            imageUrl={post.imageUrl}
-          />
-        ))
+        <div class="container">
+          <div id="post-container-left" className="post-container">
+            {posts.map((post, index) =>
+              index % 2 === 0 ? (
+                <Post
+                  key={`post-${post._id}`}
+                  name={post.name}
+                  imageUrl={post.imageUrl}
+                  productUrl={post.productUrl}
+                />
+              ) : (
+                <></>
+              )
+            )}
+          </div>
+
+          <div id="post-container-right" className="post-container">
+            {posts.map((post, index) =>
+              index % 2 === 1 ? (
+                <Post
+                  key={`post-${post._id}`}
+                  name={post.name}
+                  imageUrl={post.imageUrl}
+                  productUrl={post.productUrl}
+                />
+              ) : (
+                <></>
+              )
+            )}
+          </div>
+        </div>
       )}
     </Layout>
   )

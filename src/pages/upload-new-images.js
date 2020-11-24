@@ -18,6 +18,7 @@ const UploadNewImagesPage = () => {
   const [fields, setFields] = useState({
     name: "",
     imageUrl: "",
+    productUrl: "",
   })
   const handleChange = event => {
     setFields({
@@ -33,6 +34,7 @@ const UploadNewImagesPage = () => {
         setFields({
           name: "",
           imageUrl: "",
+          productUrl: "",
         })
         toast.success("Post added successfully!")
         setPosts([...posts, post.createPost])
@@ -54,12 +56,14 @@ const UploadNewImagesPage = () => {
       }
     )
   }
-  const createPost = async (name, imageUrl) => {
+  const createPost = async (name, imageUrl, productUrl) => {
     return await client.request(
       `mutation {
-				createPost(data: { name: "${name}", imageUrl: "${imageUrl}" }) {
+				createPost(data: { name: "${name}", imageUrl: "${imageUrl}", productUrl: "${productUrl}" }) {
+					_id
 					name
 					imageUrl
+					productUrl
 				}
 			}`
     )
@@ -82,6 +86,7 @@ const UploadNewImagesPage = () => {
 								_id
 								name
 								imageUrl
+								productUrl
 							}
 						}
 					}`
@@ -106,8 +111,10 @@ const UploadNewImagesPage = () => {
           <ul>
             {posts.map(post => (
               <li key={`post-${post._id}`}>
-                {post.name} - {post.imageUrl} -{" "}
-                <a onClick={() => handleDeletePost(post._id)}>delete</a>
+                <a href={post.productUrl} target="_blank">
+                  {post.name}
+                </a>{" "}
+                - <a onClick={() => handleDeletePost(post._id)}>delete</a>
               </li>
             ))}
           </ul>
@@ -133,6 +140,15 @@ const UploadNewImagesPage = () => {
             name="imageUrl"
             placeholder="Image URL"
             value={fields.imageUrl}
+            onChange={handleChange}
+          />
+          <br />
+          <input
+            type="text"
+            id="productUrl"
+            name="productUrl"
+            placeholder="Product URL"
+            value={fields.productUrl}
             onChange={handleChange}
           />
           <br />
