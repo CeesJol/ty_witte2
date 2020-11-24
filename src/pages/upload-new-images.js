@@ -116,7 +116,11 @@ const UploadNewImagesPage = () => {
           <ul>
             {posts.map(post => (
               <li key={`post-${post._id}`}>
-                <a href={post.productUrl} target="_blank">
+                <a
+                  href={post.productUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {post.name}
                 </a>{" "}
                 - <a onClick={() => handleDeletePost(post._id)}>delete</a>

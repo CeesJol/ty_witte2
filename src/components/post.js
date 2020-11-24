@@ -3,7 +3,7 @@ import "./post.css"
 
 const Post = ({ name, imageUrl, productUrl, code }) => {
   return (
-    <a href={productUrl} target="_blank">
+    <a href={productUrl} target="_blank" rel="noopener noreferrer">
       <div className="post">
         <img src={imageUrl} alt={name} />
         <p>{name}</p>
