@@ -24,6 +24,7 @@ const IndexPage = () => {
 								name
 								imageUrl
 								productUrl
+								code
 							}
 						}
 					}`
@@ -49,6 +50,7 @@ const IndexPage = () => {
                   name={post.name}
                   imageUrl={post.imageUrl}
                   productUrl={post.productUrl}
+                  code={post.code}
                 />
               ) : (
                 <></>
@@ -64,6 +66,7 @@ const IndexPage = () => {
                   name={post.name}
                   imageUrl={post.imageUrl}
                   productUrl={post.productUrl}
+                  code={post.code}
                 />
               ) : (
                 <></>

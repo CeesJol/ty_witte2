@@ -2,6 +2,7 @@ type Post {
   name: String
   imageUrl: String
   productUrl: String
+  code: String
 }
 
 type Query {

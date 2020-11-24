@@ -15,11 +15,13 @@ const UploadNewImagesPage = () => {
   })
   const [disabled, setDisabled] = useState(false)
   const [posts, setPosts] = useState(null)
-  const [fields, setFields] = useState({
+  const defaultState = {
     name: "",
     imageUrl: "",
     productUrl: "",
-  })
+    code: "",
+  }
+  const [fields, setFields] = useState(defaultState)
   const handleChange = event => {
     setFields({
       ...fields,
@@ -29,13 +31,14 @@ const UploadNewImagesPage = () => {
   const handleNewPost = async event => {
     setDisabled(true)
     event.preventDefault()
-    await createPost(fields.name, fields.imageUrl).then(
+    await createPost(
+      fields.name,
+      fields.imageUrl,
+      fields.productUrl,
+      fields.code
+    ).then(
       post => {
-        setFields({
-          name: "",
-          imageUrl: "",
-          productUrl: "",
-        })
+        setFields(defaultState)
         toast.success("Post added successfully!")
         setPosts([...posts, post.createPost])
       },
@@ -56,14 +59,15 @@ const UploadNewImagesPage = () => {
       }
     )
   }
-  const createPost = async (name, imageUrl, productUrl) => {
+  const createPost = async (name, imageUrl, productUrl, code) => {
     return await client.request(
       `mutation {
-				createPost(data: { name: "${name}", imageUrl: "${imageUrl}", productUrl: "${productUrl}" }) {
+				createPost(data: { name: "${name}", imageUrl: "${imageUrl}", productUrl: "${productUrl}", code: "${code}" }) {
 					_id
 					name
 					imageUrl
 					productUrl
+					code
 				}
 			}`
     )
@@ -87,6 +91,7 @@ const UploadNewImagesPage = () => {
 								name
 								imageUrl
 								productUrl
+								code
 							}
 						}
 					}`
@@ -149,6 +154,15 @@ const UploadNewImagesPage = () => {
             name="productUrl"
             placeholder="Product URL"
             value={fields.productUrl}
+            onChange={handleChange}
+          />
+          <br />
+          <input
+            type="text"
+            id="code"
+            name="code"
+            placeholder="Discount Code"
+            value={fields.code}
             onChange={handleChange}
           />
           <br />

@@ -22,7 +22,7 @@
 	margin: 0% 2.5%;
 }
 
-.post a {
+.post-container a {
 	text-decoration: none;
-	color: inherit;
+	color: black;
 }
