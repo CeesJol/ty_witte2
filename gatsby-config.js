@@ -10,6 +10,8 @@ module.exports = {
       options: {
         // The property ID; the tracking code won't be generated without it
         trackingId: "G-ZRZSD16RP5",
+        head: true,
+        anonymize: true,
       },
     },
     `gatsby-plugin-react-helmet`,
